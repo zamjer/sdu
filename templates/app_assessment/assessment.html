@@ -1,0 +1,160 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}Assessments{% endblock title %}
+
+{% block breadcrumb %}
+    <div>
+        <h1><i class="fa fa-files-o"></i> My Assessments</h1>
+        <p>Assessment List</p>
+    </div>
+    <ul class="app-breadcrumb breadcrumb">
+        <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+        <li class="breadcrumb-item"><a href="#">Assessment List</a></li>
+    </ul>
+{% endblock breadcrumb %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="tile">
+            <div class="tile-body">
+                <div class="table-responsive">
+                    <div id="sampleTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <table class="table table-hover table-bordered dataTable no-footer" id="sampleTable" role="grid" aria-describedby="sampleTable_info">
+                                    <thead>
+                                        <tr role="row">
+
+
+                                            <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Age: activate to sort column ascending" style="width: 15px;">SL</th>
+                                            <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 250px;">Event Name</th>
+                                            <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 300px;">Description</th>
+                                            <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending" style="width: 180px;">Start Time</th>
+                                            <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending" style="width: 180px;">End Time</th>
+                                            <th></th>
+                                            <th></th>
+
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for event in object_list %}
+                                            <tr role="row" class="odd">
+
+                                                <td class="sorting_1">{{ forloop.counter }}</td>
+                                                <td>{{ event.title }}</td>
+                                                <td>{{ event.description }}</td>
+                                                <td>{{ event.start_time }}</td>
+                                                <td>{{ event.end_time }}</td>
+                                                <td><a class="fa fa-pencil" style="color:royalblue" href="{% url 'app_event:event_edit' event.pk %}"></a></td>
+                                                <td><a class="fa fa-remove" style="color:red" href="#"></a></td>
+
+                                            </tr>
+
+                                            
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% comment %} 
+
+<!-- Add button to trigger modal -->
+<button class="add-button" onclick="openModal()">Add</button>
+
+<!-- Modal overlay -->
+<div class="my-modal-overlay" id="modalOverlay">
+    <!-- Modal content -->
+    <div class="my-modal-content">
+        <h4>Add New Entry</h4>
+        <form>
+            <!-- Your form fields here -->
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+            
+            <label for="age">Age:</label>
+            <input type="number" id="age" name="age" required>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+            
+            <label for="age">Age:</label>
+            <input type="number" id="age" name="age" required>
+            
+            <button type="submit">Add</button>
+        </form>
+        <button onclick="closeModal()">Cancel</button>
+    </div>
+</div>
+
+<script>
+    function openModal() {
+        var modalOverlay = document.getElementById("modalOverlay");
+        modalOverlay.style.display = "flex";
+    }
+
+    function closeModal() {
+        var modalOverlay = document.getElementById("modalOverlay");
+        modalOverlay.style.display = "none";
+    }
+</script>
+
+
+
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    Launch demo modal
+  </button>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        
+
+            
+            <form method="post">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <table class="form form-table">
+                    {{ form }}
+                    <tr><td colspan="2"><button type="submit" class="btn btn-info right"> Submit </button></td></tr>
+                    </table>
+                </div>
+              </form>
+
+
+        
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+ {% endcomment %}
+
+
+
+
+{% endblock content %}
+
+{% block extrascripts %}
+    <script type="text/javascript" src="{% static 'js/plugins/jquery.dataTables.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/plugins/dataTables.bootstrap.min.js' %}"></script>
+    <script type="text/javascript">$('#sampleTable').DataTable();</script>
+{% endblock extrascripts %}
