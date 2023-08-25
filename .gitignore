@@ -1,5 +1,5 @@
 # Ignore the "static" folder
-
+try
 
 # Ignore the "files
 .env
