@@ -13,8 +13,6 @@ git clone https://github.com/admingrey/sdu.git
 cd sdu
 ```
 ```
-```
-```
 rename "dot_env" file to ".env"
 ```
 ```
