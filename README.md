@@ -13,6 +13,9 @@ git clone https://github.com/admingrey/sdu.git
 cd sdu
 ```
 ```
+extract the static/static.rar to the folder static/
+```
+```
 rename "dot_env" file to ".env"
 ```
 ```
