@@ -1,6 +1,6 @@
 {% extends 'base/base.html' %}
 {% load static %}
-{% block title %}Study Down Under | Calendar{% endblock title %}
+{% block title %}Event Calendar{% endblock title %}
 
 {% block extracss %}
   <link href="{% static 'calendar/main.css' %}" rel="stylesheet" />
@@ -8,20 +8,21 @@
 
 {% block breadcrumb %}
   <div>
-    <h1><i class="fa fa-calendar"></i> Global Calendar</h1>
-    <p>Student's Tasks Tracker Calendar</p>
+      <h1><i class="fa fa-calendar"></i> Calendar</h1>
+      <p>Event Calendar</p>
   </div>
   <ul class="app-breadcrumb breadcrumb">
       <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
       <li class="breadcrumb-item"><a href="#">Calendar</a></li>
+      
   </ul>
 {% endblock breadcrumb %}
 
 {% block content %}
-<div class="row">
     <div class="col-md-12">
         <div class="tile row">
             <div class="col-md-3">
+             
                 <div id="external-events">
                     <h4 class="mb-4">Running Events</h4>
                     {% for event in events_month %}
@@ -36,9 +37,22 @@
                 </div>
             </div>
             <div class="col-md-9">
-                <div id="calendar"></div>
+                  <!--Code sa Create button-->
+                  <button  id="" type="button" data-toggle="dropdown" class="btn btn-primary"><i class="fa fa-calendar"> </i> Create</button>
+                  <ul class="dropdown-menu settings-menu dropdown-menu-right">
+                      <li>
+                          <a class="dropdown-item" href="#" id="openAddEvent"><i class="fa fa-calendar"></i> Add Event</a>
+                      </li>
+                      <li>
+                          <a class="dropdown-item" href="#" id="openAddCourse"><i class="fa fa-book"></i> Add Course</a>
+                      </li>
+                  </ul>
+                <div id="calendar">
+                </div>
+                
+              
             </div>
-
+            <!--code sa pag Add Event-->
             <div class="modal fade show" id="eventModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
@@ -82,6 +96,7 @@
 {% endblock content %}
 
 {% block extrascripts %}
+<!--Coding sa javascript-->
   <script src="{% static 'calendar/main.js' %}"></script>
   <script>
       document.addEventListener('DOMContentLoaded', function() {
@@ -94,6 +109,9 @@
             center: 'title',
             right: 'dayGridMonth,timeGridWeek,timeGridDay,list'
           },
+          /*** 
+          ====  Disable ko yong pag add ng event sa pag click sa date ng calendar====
+
           initialDate: today,
           navLinks: true, // can click day/week names to navigate views
           selectable: true,
@@ -104,13 +122,13 @@
             modal.style.display = 'block'
             calendar.unselect()
           },
-          // THIS KEY WON'T WORK IN PRODUCTION!!!
-          // To make your own Google API key, follow the directions here:
-          // http://fullcalendar.io/docs/google_calendar/
-          // googleCalendarApiKey: 'AIzaSyCqCxjjLtjbtkX37aOtWB8OfwBLy_6QuYk',
+          THIS KEY WON'T WORK IN PRODUCTION!!!
+           To make your own Google API key, follow the directions here:
+           http://fullcalendar.io/docs/google_calendar/
+          googleCalendarApiKey: 'AIzaSyCqCxjjLtjbtkX37aOtWB8OfwBLy_6QuYk',
 
-          // bangladesh Holidays
-          // events: 'bn.bd#holiday@group.v.calendar.google.com',
+          bangladesh Holidays
+           events: 'bn.bd#holiday@group.v.calendar.google.com',***/
           eventClick: function(arg) {
             if (confirm('Are you sure you want to delete this event?')) {
               arg.event.remove()
@@ -144,12 +162,22 @@
 
         calendar.render();
       });
+      
+      const addEvent = document.getElementById('openAddEvent');
+      const addCourse = document.getElementById('openAddCourse');
       const closeBtn1 = document.getElementById('modalClose1');
       const closeBtn2 = document.getElementById('modalClose2');
+      //code sa pag tawag sa Add Event
+      addEvent.addEventListener('click',()=>{
+        var addEventModal = document.getElementById('eventModal')
+        addEventModal.style.display = 'block';
+      });
+      //code sa button close 1 "X" ng add event 
       closeBtn1.addEventListener('click',()=>{
         const eventModal = document.getElementById('eventModal')
         eventModal.style.display = 'none';
       });
+      //code sa button 2 close ng add event
       closeBtn2.addEventListener('click',()=>{
         const eventModal = document.getElementById('eventModal')
         eventModal.style.display = 'none';
